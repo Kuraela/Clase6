@@ -1,22 +1,24 @@
-const PI2 = Math.PI * 2;
+const PI2 = Math.PI * 2; //Para hacer círculos
 const CANVAS = document.getElementById("lienzo");
 const CTX = CANVAS.getContext("2d");
 CANVAS.width = window.innerWidth;
 CANVAS.height = window.innerHeight;
 
+//Que se updateé el canvas con el tamaño de la ventana
 function updateCanvasSize() {
     CANVAS.width = CANVAS.getBoundingClientRect().width;
     CANVAS.height = CANVAS.getBoundingClientRect().height;
 }
 
-// Definimos el radio y la distancia entre círculos
+
 const radius = 30;
-const distanceY = 10; // Espacio entre círculos
+const distanceY = 20; //Espacio que hay entre los círculos
 
 class Circulo {
     constructor(x, y) {
-        this.borderColor = "#00ff99";
-        this.borderWidth = 4;
+        this.borderColor = "#b38bfe";
+        this.fillStyle = "#b38bfe";
+        this.borderWidth = 20;
         this.radiusX = radius;
         this.radiusY = radius;
         this.x = x;
@@ -25,46 +27,51 @@ class Circulo {
 
     draw() {
         CTX.strokeStyle = this.borderColor;
+        CTX.fillStyle = this.fillStyle;
         CTX.lineWidth = this.borderWidth;
         CTX.beginPath();
         CTX.ellipse(this.x, this.y, this.radiusX, this.radiusY, 0, 0, PI2);
         CTX.closePath();
         CTX.stroke();
+        CTX.fill();
     }
 }
 
-let listaDeCirculos = [];
+let listaCirculos = []; //El array (lista) que guarda los círculos
 
-// Calculamos la cantidad de círculos que caben en la altura del canvas
-const totalHeight = CANVAS.height;
-let currentY = radius; // Comenzamos en el primer círculo
+const totalHeight = CANVAS.height; //Creamos una variable para representar la alturatotal del lienzo
+let posActualY = radius; //Creamos una variable que sea la posición actual de Y y le asignamos el valor del radio 
+//porque es donde se va a dibujar el primer círculo
 
-while (currentY + radius <= totalHeight) {
-    let nuevoCirculo = new Circulo(CANVAS.width / 2, currentY); // Centrado horizontalmente
-    listaDeCirculos.push(nuevoCirculo);
-    currentY += (radius * 2 + distanceY); // Avanzamos la posición Y para el siguiente círculo
+while (posActualY + radius < totalHeight) { //Mientras la posición actual + el radio que vaya avanzando sea menor a la altura total del lienzo
+    let nuevoCirculo = new Circulo(CANVAS.width/28, posActualY); 
+    listaCirculos.push(nuevoCirculo); //Agrega un elemento (un círculo más) al final de la lista
+    posActualY += (radius * 2 + distanceY); //Avanzamos la posición del siguiente círculo (sumándole el diámetro + el espacio que dijimos
+    //que hay entre cada círculo)
 }
 
 function render() {
-    CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
+    CTX.clearRect(0, 0, CANVAS.width, CANVAS.height); //Limpiamos el lienzo del contenido anterior para que no se superponga
 
-    for (let i = 0; i < listaDeCirculos.length; i++) {
-        listaDeCirculos[i].draw();
+    for (let i = 0; i < listaCirculos.length; i++) { //Este for recorre todos los círculos almacenados en listaCirculos y 
+        //llama al método draw() de cada uno para que se dibujen
+        listaCirculos[i].draw();
     }
 
-    requestAnimationFrame(render);
+    requestAnimationFrame(render); 
 }
 
-window.addEventListener("resize", () => {
+window.addEventListener("resize", () => {//Se agrega un "listener" que escucha el evento resize en la ventana del navegador. 
+    //Cada vez que se redimensione la ventana, se ejecutará la función vacía
     updateCanvasSize();
-    // Al cambiar el tamaño de la ventana, volvemos a calcular los círculos
-    listaDeCirculos = []; // Limpiamos la lista
-    currentY = radius; // Reiniciamos la posición Y
+    //Al cambiar el tamaño de la ventana, volvemos a calcular los círculos
+    listaCirculos = []; //Limpiamos la lista de círculos porque el espacio disponible para dibujarlos puede haber cambiado
+    posActualY = radius; //Reiniciamos la posición Y
 
-    while (currentY + radius <= CANVAS.height) {
-        let nuevoCirculo = new Circulo(CANVAS.width / 2, currentY);
-        listaDeCirculos.push(nuevoCirculo);
-        currentY += (radius * 2 + distanceY);
+    while (posActualY + radius <= CANVAS.height) {
+        let nuevoCirculo = new Circulo(CANVAS.width/28, posActualY);
+        listaCirculos.push(nuevoCirculo);
+        posActualY += (radius * 2 + distanceY);
     }
 });
 
@@ -73,4 +80,3 @@ requestAnimationFrame(render);
 
 
 
-/* Happy Coding! 👾 */

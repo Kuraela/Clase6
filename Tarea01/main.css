@@ -1,5 +1,5 @@
 body {
-  background-color: #2cc8d3;
+  background-color: #f4ccfe;
   color: white;
   margin: 0;
 }
@@ -10,7 +10,5 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-
-  border: 70px solid rgb(61, 87, 193);
   box-sizing: border-box;
 }
