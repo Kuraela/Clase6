@@ -11,13 +11,37 @@ function updateCanvasSize() {
 }
 
 
-const radius = 30;
-const distanceY = 20; //Espacio que hay entre los círculos
+const radius = 10;
+const distaY = 20; //Espacio que hay entre los círculos
+const distanceX = 20;
 
-class Circulo {
+class Circulo1 {
     constructor(x, y) {
-        this.borderColor = "#b38bfe";
-        this.fillStyle = "#b38bfe";
+        this.borderColor = "#ccd7fe";
+        this.fillStyle = "#ccd7fe";
+        this.borderWidth = 20;
+        this.radiusX = radius;
+        this.radiusY = radius;
+        this.x = x;
+        this.y = y;
+    }
+
+    draw() {
+        CTX.strokeStyle = this.borderColor;
+        CTX.fillStyle = this.fillStyle;
+        CTX.lineWidth = this.borderWidth;
+        CTX.beginPath();
+        CTX.ellipse(this.x, this.y, this.radiusX, this.radiusY, 0, 0, PI2);
+        CTX.closePath();
+        CTX.stroke();
+        CTX.fill();
+    }
+}
+
+class Circulo2 {
+    constructor(x, y) {
+        this.borderColor = "#ffb5e6";
+        this.fillStyle = "#ffb5e6";
         this.borderWidth = 20;
         this.radiusX = radius;
         this.radiusY = radius;
@@ -76,3 +100,7 @@ window.addEventListener("resize", () => {//Se agrega un "listener" que escucha e
 });
 
 requestAnimationFrame(render);
+
+
+
+
